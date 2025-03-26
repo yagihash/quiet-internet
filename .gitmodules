@@ -1,0 +1,3 @@
+[submodule "quiet-internet-api-docs"]
+	path = quiet-internet-api-docs
+	url = git@github.com:catnose99/quiet-internet-api-docs.git

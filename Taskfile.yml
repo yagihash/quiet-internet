@@ -6,6 +6,9 @@ vars:
   GREETING: Hello, World!
 
 tasks:
+  default:
+    cmds:
+      - go mod download
   test:
     cmds:
       - go test -v -cover -race ./...

@@ -27,6 +27,8 @@ type Post struct {
 	Tags               []string `json:"tags"`
 	CreatedAt          string   `json:"createdAt"`
 	UpdatedAt          string   `json:"updatedAt"`
+	BodyMarkdown       string   `json:"bodyMarkdown,omitempty"`
+	BodyHTML           string   `json:"bodyHTML,omitempty"`
 }
 
 type Pagination struct {
@@ -63,6 +65,27 @@ func (c *Client) ListPosts(params *ListPostsParams) (*ListPostsResponse, error) 
 
 	ret := &ListPostsResponse{}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+
+	return ret, nil
+}
+
+func (c *Client) GetPost(slug string) (*Post, error) {
+	url := c.base + "/posts/" + slug
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := c.do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	ret := &Post{}
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 

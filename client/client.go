@@ -1,12 +1,14 @@
 package client
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/yagihash/quiet-internet/client/transport"
 )
 
-const Base = "https://sizu.me/api/"
+const Base = "https://sizu.me/api/v1"
 
 type Client struct {
 	base       string
@@ -29,6 +31,25 @@ func New(token string, opts ...Option) *Client {
 	}
 
 	return c
+}
+
+func (c *Client) do(req *http.Request) (*http.Response, error) {
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		body, err := io.ReadAll(res.Body)
+		if err != nil {
+			res.Body.Close()
+			return nil, err
+		}
+		res.Body.Close()
+		return nil, fmt.Errorf("HTTP error: %d, response: %s", res.StatusCode, string(body))
+	}
+
+	return res, nil
 }
 
 func WithUserAgent(userAgent string) Option {

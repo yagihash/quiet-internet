@@ -90,7 +90,8 @@ func realMain() int {
 		return ExitCodeError
 	}
 
-	qi := client.New(cfg.Token, client.WithUserAgent(cfg.UserAgent))
+	ua := "qi-v0.0.1" // TODO:use git tag info
+	qi := client.New(cfg.Token, client.WithUserAgent(ua))
 
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.FlagsCommand(), "")

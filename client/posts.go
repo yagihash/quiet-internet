@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/google/go-querystring/query"
 )
@@ -14,21 +15,21 @@ type ListPostsParams struct {
 	Direction     string `url:"direction,omitempty"`
 	Visibility    string `url:"visibility,omitempty"`
 	CreatedAfter  string `url:"createdAfter,omitempty"`
-	CreatedBefore string `url:"createdBefore,omitempty"`
+	CreatedBefore strin  `url:"createdBefore,omitempty"`
 	UpdatedAfter  string `url:"updatedAfter,omitempty"`
 	UpdatedBefore string `url:"updatedBefore,omitempty"`
 }
 
 type Post struct {
-	Slug               string   `json:"slug"`
-	Title              string   `json:"title"`
-	BodyCharacterCount int      `json:"bodyCharacterCount"`
-	Visibility         string   `json:"visibility"`
-	Tags               []string `json:"tags"`
-	CreatedAt          string   `json:"createdAt"`
-	UpdatedAt          string   `json:"updatedAt"`
-	BodyMarkdown       string   `json:"bodyMarkdown,omitempty"`
-	BodyHTML           string   `json:"bodyHTML,omitempty"`
+	Slug               string    `json:"slug"`
+	Title              string    `json:"title"`
+	BodyCharacterCount int       `json:"bodyCharacterCount"`
+	Visibility         string    `json:"visibility"`
+	Tags               []string  `json:"tags"`
+	CreatedAt          time.Time `json:"createdAt"`
+	UpdatedAt          time.Time `json:"updatedAt"`
+	BodyMarkdown       string    `json:"bodyMarkdown,omitempty"`
+	BodyHTML           string    `json:"bodyHTML,omitempty"`
 }
 
 type Pagination struct {

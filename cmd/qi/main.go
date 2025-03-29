@@ -34,7 +34,7 @@ func (l *listCmd) SetFlags(f *flag.FlagSet) {}
 
 func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...any) subcommands.ExitStatus {
 	res, _ := l.client.ListPosts(nil)
-	data, _ := json.Marshal(res)
+	data, _ := json.MarshalIndent(res, "", "  ")
 	fmt.Printf("%s\n", data)
 	return subcommands.ExitSuccess
 }

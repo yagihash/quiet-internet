@@ -12,3 +12,8 @@ tasks:
   test:
     cmds:
       - go test -v -cover -race ./...
+  coverage:
+    cmds:
+      - go test -v -cover -race ./... -coverprofile=/tmp/cover.out
+      - go tool cover -html=/tmp/cover.out -o /tmp/cover.html
+      - open /tmp/cover.html

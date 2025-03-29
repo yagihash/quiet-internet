@@ -15,7 +15,7 @@ type ListPostsParams struct {
 	Direction     string `url:"direction,omitempty"`
 	Visibility    string `url:"visibility,omitempty"`
 	CreatedAfter  string `url:"createdAfter,omitempty"`
-	CreatedBefore strin  `url:"createdBefore,omitempty"`
+	CreatedBefore string `url:"createdBefore,omitempty"`
 	UpdatedAfter  string `url:"updatedAfter,omitempty"`
 	UpdatedBefore string `url:"updatedBefore,omitempty"`
 }

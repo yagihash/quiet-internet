@@ -5,8 +5,7 @@ import (
 )
 
 type Config struct {
-	Token     string `envconfig:"TOKEN" required:"true"`
-	UserAgent string `envconfig:"USER_AGENT" default:"qi-v0.0.1"` // TODO:gitのタグを使うようにする
+	Token string `envconfig:"TOKEN" required:"true"`
 }
 
 func Load() (*Config, error) {

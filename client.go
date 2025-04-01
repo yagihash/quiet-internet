@@ -1,11 +1,9 @@
-package client
+package quiet_internet
 
 import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/yagihash/quiet-internet/client/transport"
 )
 
 const Base = "https://sizu.me/api/v1"
@@ -19,7 +17,7 @@ type Option func(client *Client)
 
 func New(token string, opts ...Option) *Client {
 	hc := &http.Client{
-		Transport: transport.NewAuthorizationTransport(nil, token),
+		Transport: NewAuthorizationTransport(nil, token),
 	}
 	c := &Client{
 		base:       Base,
@@ -54,6 +52,6 @@ func (c *Client) do(req *http.Request) (*http.Response, error) {
 
 func WithUserAgent(userAgent string) Option {
 	return func(c *Client) {
-		c.httpClient.Transport = transport.NewUserAgentTransport(c.httpClient.Transport, userAgent)
+		c.httpClient.Transport = NewUserAgentTransport(c.httpClient.Transport, userAgent)
 	}
 }

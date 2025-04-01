@@ -1,4 +1,4 @@
-package client
+package quiet_internet
 
 import (
 	"io"

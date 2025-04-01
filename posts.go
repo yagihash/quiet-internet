@@ -1,4 +1,4 @@
-package quiet_internet
+package quietinternet
 
 import (
 	"encoding/json"

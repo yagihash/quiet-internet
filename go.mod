@@ -1,4 +1,4 @@
-module github.com/yagihash/quiet-internet
+module github.com/yagihash/quietinternet
 
 go 1.24.1
 

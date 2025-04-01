@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/subcommands"
 
-	quiet_internet "github.com/yagihash/quiet-internet"
+	qi "github.com/yagihash/quiet-internet"
 	"github.com/yagihash/quiet-internet/cmd/qi/config"
 )
 
@@ -19,7 +19,7 @@ const (
 )
 
 type listCmd struct {
-	client *quiet_internet.Client
+	client *qi.Client
 
 	page          int
 	perPage       int
@@ -54,7 +54,7 @@ func (l *listCmd) SetFlags(f *flag.FlagSet) {
 }
 
 func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...any) subcommands.ExitStatus {
-	params := &quiet_internet.ListPostsParams{
+	params := &qi.ListPostsParams{
 		Page:          l.page,
 		PerPage:       l.perPage,
 		Sort:          l.sort,
@@ -82,7 +82,7 @@ func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...any) subcomma
 }
 
 type getCmd struct {
-	client *quiet_internet.Client
+	client *qi.Client
 
 	slug string
 }
@@ -128,7 +128,7 @@ func realMain() int {
 	}
 
 	ua := "qi-v0.0.1" // TODO:use git tag info
-	qi := quiet_internet.New(cfg.Token, quiet_internet.WithUserAgent(ua))
+	qi := qi.New(cfg.Token, qi.WithUserAgent(ua))
 
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.FlagsCommand(), "")

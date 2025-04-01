@@ -46,6 +46,10 @@ type ListPostsResponse struct {
 	Pagination Pagination `json:"pagination"`
 }
 
+type GetPostResponse struct {
+	Post `json:"post"`
+}
+
 func (c *Client) ListPosts(params *ListPostsParams) (*ListPostsResponse, error) {
 	q, err := query.Values(params)
 	if err != nil {
@@ -72,7 +76,7 @@ func (c *Client) ListPosts(params *ListPostsParams) (*ListPostsResponse, error) 
 	return ret, nil
 }
 
-func (c *Client) GetPost(slug string) (*Post, error) {
+func (c *Client) GetPost(slug string) (*GetPostResponse, error) {
 	url := c.base + "/posts/" + slug
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -85,8 +89,8 @@ func (c *Client) GetPost(slug string) (*Post, error) {
 	}
 	defer res.Body.Close()
 
-	ret := &Post{}
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	ret := &GetPostResponse{}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 

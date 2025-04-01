@@ -33,7 +33,7 @@ type listCmd struct {
 }
 
 func (*listCmd) Name() string     { return "list" }
-func (*listCmd) Synopsis() string { return "List posts to stdout in JSON format" }
+func (*listCmd) Synopsis() string { return "Fetch the list of posts in JSON format" }
 func (*listCmd) Usage() string {
 	return `list:
 	List posts.
@@ -70,11 +70,48 @@ func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...any) subcomma
 		fmt.Fprintln(os.Stderr, err)
 		return subcommands.ExitFailure
 	}
+
 	data, err := json.MarshalIndent(res, "", "  ")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return subcommands.ExitFailure
 	}
+
+	fmt.Printf("%s\n", data)
+	return subcommands.ExitSuccess
+}
+
+type getCmd struct {
+	client *client.Client
+
+	slug string
+}
+
+func (*getCmd) Name() string     { return "get" }
+func (*getCmd) Synopsis() string { return "Fetch a post in JSON format" }
+func (*getCmd) Usage() string {
+	return `get:
+	Get a post.
+`
+}
+
+func (g *getCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&g.slug, "slug", "", "slug")
+}
+
+func (g *getCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...any) subcommands.ExitStatus {
+	res, err := g.client.GetPost(g.slug)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return subcommands.ExitFailure
+	}
+
+	data, err := json.MarshalIndent(res, "", "  ")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return subcommands.ExitFailure
+	}
+
 	fmt.Printf("%s\n", data)
 	return subcommands.ExitSuccess
 }
@@ -97,6 +134,7 @@ func realMain() int {
 	subcommands.Register(subcommands.FlagsCommand(), "")
 	subcommands.Register(subcommands.CommandsCommand(), "")
 	subcommands.Register(&listCmd{client: qi}, "")
+	subcommands.Register(&getCmd{client: qi}, "")
 
 	flag.Parse()
 	ctx := context.Background()

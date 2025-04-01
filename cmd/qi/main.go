@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/subcommands"
 
-	qi "github.com/yagihash/quiet-internet"
-	"github.com/yagihash/quiet-internet/cmd/qi/config"
+	qi "github.com/yagihash/quietinternet"
+	"github.com/yagihash/quietinternet/cmd/qi/config"
 )
 
 const (

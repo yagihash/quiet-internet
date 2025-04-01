@@ -10,7 +10,7 @@ import (
 	"github.com/google/subcommands"
 
 	"github.com/yagihash/quiet-internet/client"
-	"github.com/yagihash/quiet-internet/config"
+	"github.com/yagihash/quiet-internet/cmd/qi/config"
 )
 
 const (
